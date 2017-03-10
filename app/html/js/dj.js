@@ -1,4 +1,11 @@
-const socket = io.connect('http://localhost:8080');
+const socket = io();
+socket.emit('join', {
+  room: "<%= room %>"
+});
+socket.on('welcome', (data) => {
+  console.log(data.id);
+});
+
 var SEid = []; //SE呼ぶ時に必要
 var loopid=[]; //ループを保管しておく場所
 var se = [
@@ -147,7 +154,7 @@ $(".sound-bar").change(function(){
 });
 
 socket.on('sent',(data) => {
-  groove_req[send_json["id"]] = data;
+  groove_req[data.id] = data;
 });
 
 //----------------デバッグ用部分-----------------------

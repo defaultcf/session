@@ -1,40 +1,39 @@
-Room is <%= room %>
+  <link href="css/main.css" type="text/css" rel="stylesheet">
+  <link href="css/nouislider.min.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.css" />
 
-<input type="text" id="msg" placeholder="メッセージ">
-<button id="send">送信</button>
+  
+  <h3>バー</h3>
+  <form action="#"><p class="range-field"><input type="range" class="sound-bar" id="range0" sound="basedrum" min="0" max="4" value="0"/></p></form>
+  <form action="#"><p class="range-field"><input type="range" class="sound-bar" id="range0" sound="snare" min="0" max="4" value="0"/></p></form>
+  <form action="#"><p class="range-field"><input type="range" class="sound-bar" id="range0" sound="piano1" min="0" max="4" value="0"/></p></form>
+  <form action="#"><p class="range-field"><input type="range" class="sound-bar" id="range0" sound="hat" min="0" max="4" value="0"/></p></form>
+  <h3>リズム</h3>
+  <div class="btn rhythm-btn" style="background:#e91e63">BTN</div>
+  <div class="btn rhythm-btn">BTN</div>
+  <div class="btn rhythm-btn">BTN</div>
+  <div class="btn rhythm-btn">BTN</div>
+  <h3>サウンド</h3>
+  <div class="btn sound-btn" id="btn-0" sound="basedrum">BTN</div>
+  <div class="btn sound-btn" id="btn-1" sound="snare">BTN</div>
+  <div class="btn sound-btn" id="btn-2" sound="piano1">BTN</div>
+  <div class="btn sound-btn" id="btn-3" sound="hat">BTN</div>
+  <h3>デバッグ用</h3>
+  <div class="btn change-btn">CNG</div>
+  <div class="btn change-btn">CNG</div>
+  <div class="btn change-btn">CNG</div>
+  <div class="btn change-btn">CNG</div>
 
-<script src="/socket.io/socket.io.js"></script>
-<script>
-window.onload = () => {
-  const msg = document.getElementById('msg');
-  const sendButton = document.getElementById('send');
+  <div class="btn" id="debug01">デバッグ用</div>
+  <div class="btn" id="session">擬似セッション</div>
 
-  const socket = io();
-  socket.emit('join', {
-    room: "<%= room %>"
-  });
-  socket.on('welcome', (data) => {
-    console.log(data.id);
-  });
 
-  sendButton.addEventListener('click', () => {
-    socket.emit('send', {
-      msg: msg.value
-    });
-  });
-  socket.on('sent', (data) => {
-    console.log(data.msg);
-  });
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>  <script src="https://code.createjs.com/soundjs-0.6.2.min.js"></script>
 
-  socket.on('info', (data) => {
-    switch(data.type) {
-      case 'err':
-        alert(data.msg);
-        break;
-      default:
-        console.log(data.msg);
-        break;
-    }
-  });
-}
-</script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+  <script src="js/nouislider.min.js"></script>
+  <script src="js/ion.sound.min.js"></script>
+  <script src="js/dj.js"></script>

@@ -2,6 +2,7 @@ const path = require('path');
 const Koa = require('koa');
 const route = require('koa-route');
 const render = require('koa-ejs');
+const serve = require('koa-static');
 
 const app = new Koa();
 render(app, {
@@ -18,6 +19,7 @@ app.use(route.get('/', async function (ctx) {
 app.use(route.get('/:room', async function (ctx, room) {
   await ctx.render('room', {room:room});
 }));
+app.use(serve(__dirname + '/html'));
 
 const server = app.listen(8080);
 
@@ -36,7 +38,6 @@ io.on('connection', (socket) => {
     socket.emit('welcome', {id: socket.id});
   });
   socket.on('send', (data) => {
-    console.log(data.msg);
-    socket.to(store[socket.id].room).emit('sent', {msg: data.msg});
+    io.to(store[socket.id].room).emit('sent', data);
   });
 });
