@@ -1,0 +1,40 @@
+Room is <%= room %>
+
+<input type="text" id="msg" placeholder="メッセージ">
+<button id="send">送信</button>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+window.onload = () => {
+  const msg = document.getElementById('msg');
+  const sendButton = document.getElementById('send');
+
+  const socket = io();
+  socket.emit('join', {
+    room: "<%= room %>"
+  });
+  socket.on('welcome', (data) => {
+    console.log(data.id);
+  });
+
+  sendButton.addEventListener('click', () => {
+    socket.emit('send', {
+      msg: msg.value
+    });
+  });
+  socket.on('sent', (data) => {
+    console.log(data.msg);
+  });
+
+  socket.on('info', (data) => {
+    switch(data.type) {
+      case 'err':
+        alert(data.msg);
+        break;
+      default:
+        console.log(data.msg);
+        break;
+    }
+  });
+}
+</script>

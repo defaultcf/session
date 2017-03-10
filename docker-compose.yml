@@ -1,0 +1,11 @@
+version: '2'
+services:
+  app:
+    image: node:7.7.1-alpine
+    volumes:
+      - ./app:/mnt
+    ports:
+      - 80:8080
+    working_dir: /mnt
+    tty: true
+    #command: node .
