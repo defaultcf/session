@@ -27,7 +27,7 @@ for(let i = 0; i < se.length; i++) {
 
 var client_id = "ABC";
 
-var bpm = 112;
+var bpm = 120;
 var groove_req = [];
 var groove_playing = [];
 var change_groove_req = [];
@@ -38,21 +38,25 @@ socket.on('add_groove',(data) => {
 });
 
 var metro_place = 0;
-var metronome = setInterval(function(){
-  if(metro_place == 0){
-    //サウンドを追加する処理
-    add_groove();
-    //擬似セッション用
-    session();
-  }
-  //読み込んでいるサウンドから、現在呼び出すパターンを選択
-  for(key in groove_playing){
-    if(groove_playing[key].rhythm[metro_place]){
-      play(groove_playing[key].sound);
+
+var metronome;
+socket.on('start_metro',() => {
+  metronome = setInterval(function(){
+    if(metro_place == 0){
+      //サウンドを追加する処理
+      add_groove();
+      //擬似セッション用
+      session();
     }
-  }
-  metro_place = (metro_place + 1) % 16;
-},60000/bpm/4);//60BPMで1秒毎に16回(16ビート)
+    //読み込んでいるサウンドから、現在呼び出すパターンを選択
+    for(key in groove_playing){
+      if(groove_playing[key].rhythm[metro_place]){
+        play(groove_playing[key].sound);
+      }
+    }
+    metro_place = (metro_place + 1) % 16;
+  },60000/bpm/4);//60BPMで1秒毎に16回(16ビート)
+});
 
 function add_groove(){
   for(key in groove_req){

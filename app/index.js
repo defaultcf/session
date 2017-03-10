@@ -24,9 +24,11 @@ app.use(serve(__dirname + '/html'));
 const server = app.listen(8080);
 
 var store = {};
+var no_have_metro_user = [];
 const io = require('socket.io').listen(server);
 io.on('connection', (socket) => {
   socket.on('join', (data) => {
+    no_have_metro_user.push(socket.id);
     if(data.room.match(/[^A-Za-z0-9]+/)) {
       socket.emit('info', {
         type: 'err',
@@ -41,3 +43,12 @@ io.on('connection', (socket) => {
     io.to(store[socket.id].room).emit('sent', data);
   });
 });
+
+var bpm = 120;
+var metro_place = 0;
+var metronome = setInterval(function(){
+  for(let i = 0;i<no_have_metro_user.length;i++){
+    io.to(no_have_metro_user[i]).emit('start_metro');
+  }
+  no_have_metro_user = [];
+},240000/bpm);//60BPMで1秒毎に16回(16ビート)
