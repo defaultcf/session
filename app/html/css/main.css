@@ -1,0 +1,38 @@
+html{width:100%;height:100%;}
+body{width:100%;height:100%;position:relative;}
+
+#ring0{
+  position:absolute;
+  bottom:0%;
+  right:0%;
+  width:49%;
+}
+#ring1{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:49%;
+}
+#ring2{
+  position:absolute;
+  top:40%;
+  left:10%;
+  width:80%;
+}
+#ring3{
+  position:absolute;
+  top:60%;
+  left:25%;
+  width:50%;
+}
+
+/*
+.ring {
+  margin: 10px;
+  height: 100px;
+  width: 150px;
+  color: white;
+  background-color: #666;
+  display: inline;
+}
+*/
